@@ -1,0 +1,80 @@
+<div class="jumbotron text-center">
+  <h1 class="display-3">Covid 19 Dashboard</h1>
+  <hr class="my-2" />
+
+  <div class="row">
+    <div class="card col p-3 m-3">
+      <div class="ui statistic">
+        <div class="label">
+          <font style="vertical-align: inherit"
+            ><font style="vertical-align: inherit">
+              <h3>Confirmed</h3>
+            </font></font
+          >
+        </div>
+        <div class="value">
+          <font style="vertical-align: inherit"
+            ><font style="vertical-align: inherit">
+              {{ this.totalConfirmed }}
+            </font></font
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="card col p-3 m-3">
+      <div class="ui statistic">
+        <div class="label">
+          <font style="vertical-align: inherit"
+            ><font style="vertical-align: inherit">
+              <h3>Recovered</h3>
+            </font></font
+          >
+        </div>
+        <div class="value">
+          <font style="vertical-align: inherit"
+            ><font style="vertical-align: inherit">
+              {{ totalRecovered }}
+            </font></font
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="card col p-3 m-3">
+      <div class="ui statistic">
+        <div class="label">
+          <font style="vertical-align: inherit"
+            ><font style="vertical-align: inherit"><h3>Deaths</h3> </font></font
+          >
+        </div>
+        <div class="value">
+          <font style="vertical-align: inherit"
+            ><font style="vertical-align: inherit">
+              {{ totalDeaths }}
+            </font></font
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="card col p-3 m-3">
+      <div class="ui statistic">
+        <div class="label">
+          <font style="vertical-align: inherit"
+            ><font style="vertical-align: inherit">
+              <h3>Active</h3>
+            </font></font
+          >
+        </div>
+        <div class="value">
+          <font style="vertical-align: inherit"
+            ><font style="vertical-align: inherit">
+              {{ totalActive }}
+            </font></font
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
