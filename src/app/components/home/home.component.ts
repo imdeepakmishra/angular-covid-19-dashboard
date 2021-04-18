@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalDataSummary } from 'src/app/models/global-data';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { GlobalDataSummary } from 'src/app/models/global-data';
 
 @Component({
   selector: 'app-home',
@@ -9,10 +9,26 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 })
 export class HomeComponent implements OnInit {
   totalConfirmed = 0;
-  totalDeaths = 0;
   totalActive = 0;
+  totalDeaths = 0;
   totalRecovered = 0;
+  loading = true;
   globalData: GlobalDataSummary[];
+  datatable = [];
+  chart = {
+    PieChart: 'PieChart',
+    ColumnChart: 'ColumnChart',
+    LineChart: 'LineChart',
+    height: 500,
+    options: {
+      animation: {
+        duration: 1000,
+        easing: 'out',
+      },
+      is3D: true,
+    },
+  };
+
   constructor(private dataService: DataServiceService) {}
 
   ngOnInit(): void {
@@ -24,11 +40,37 @@ export class HomeComponent implements OnInit {
           if (!Number.isNaN(cs.confirmed)) {
             this.totalActive += cs.active;
             this.totalConfirmed += cs.confirmed;
-            this.totalRecovered += cs.recovered;
             this.totalDeaths += cs.deaths;
+            this.totalRecovered += cs.active;
           }
         });
+
+        this.initChart('c');
+      },
+      complete: () => {
+        this.loading = false;
       },
     });
+  }
+
+  updateChart(input: HTMLInputElement) {
+    console.log(input.value);
+    this.initChart(input.value);
+  }
+
+  initChart(caseType: string) {
+    this.datatable = [];
+    // this.datatable.push(["Country", "Cases"])
+
+    this.globalData.forEach((cs) => {
+      let value: number;
+      if (caseType == 'c') if (cs.confirmed > 50000) value = cs.confirmed;
+      if (caseType == 'a') if (cs.active > 50000) value = cs.active;
+      if (caseType == 'd') if (cs.deaths > 2500) value = cs.deaths;
+      if (caseType == 'r') if (cs.recovered > 50000) value = cs.recovered;
+
+      this.datatable.push([cs.country, value]);
+    });
+    console.log(this.datatable);
   }
 }

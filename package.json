@@ -19,6 +19,8 @@
     "@angular/platform-browser": "~11.2.10",
     "@angular/platform-browser-dynamic": "~11.2.10",
     "@angular/router": "~11.2.10",
+    "angular-google-charts": "^2.1.1",
+    "ng2-google-charts": "^6.1.0",
     "ngx-bootstrap": "^6.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

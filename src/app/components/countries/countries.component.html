@@ -1,5 +1,29 @@
 <div class="jumbotron">
   <h1 class="display-3">Countries heading</h1>
-  <p class="lead">Jumbo helper text</p>
   <hr class="my-2" />
+
+  <div class="mx-auto">
+    <div class="form-group col-lg-5 mx-auto">
+      <label for="c">Select Country</label>
+      <select
+        name=""
+        class="form-control"
+        id="c"
+        #input
+        (change)="updateValues(input.value)"
+      >
+        <option value="{{ con }}" *ngFor="let con of countries">
+          {{ con }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <app-dashboard-card
+    [totalConfirmed]="totalConfirmed"
+    [totalRecovered]="totalRecovered"
+    [totalDeaths]="totalDeaths"
+    [totalActive]="totalActive"
+  >
+  </app-dashboard-card>
 </div>

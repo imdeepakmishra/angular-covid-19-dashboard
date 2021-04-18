@@ -1,80 +1,119 @@
-<div class="jumbotron text-center">
-  <h1 class="display-3">Covid 19 Dashboard</h1>
-  <hr class="my-2" />
+<div class="container">
+  <div class="ui inverted dimmer" [class.active]="loading">
+    <div class="ui text loader">Loading</div>
+  </div>
 
-  <div class="row">
-    <div class="card col p-3 m-3">
-      <div class="ui statistic">
-        <div class="label">
-          <font style="vertical-align: inherit"
-            ><font style="vertical-align: inherit">
-              <h3>Confirmed</h3>
-            </font></font
-          >
+  <div class="jumbotron bg-white text-center p-0 m-0">
+    <h1 class="display-4">Corona Covid-19 Dashboard</h1>
+    <hr />
+
+    <app-dashboard-card
+      [totalConfirmed]="totalConfirmed"
+      [totalActive]="totalActive"
+      [totalRecovered]="totalRecovered"
+      [totalDeaths]="totalDeaths"
+    ></app-dashboard-card>
+  </div>
+
+  <hr />
+
+  <div class="m-4">
+    <div class="ui form">
+      <div class="inline fields" style="justify-content: center">
+        <label for="fruit">Select Case Type : </label>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input
+              type="radio"
+              id="c"
+              #c
+              (click)="updateChart(c)"
+              value="c"
+              name="casetype"
+              checked=""
+              tabindex="0"
+              class="hidden"
+            />
+            <label for="c">Confirmed</label>
+          </div>
         </div>
-        <div class="value">
-          <font style="vertical-align: inherit"
-            ><font style="vertical-align: inherit">
-              {{ this.totalConfirmed }}
-            </font></font
-          >
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input
+              type="radio"
+              value="d"
+              #d
+              (click)="updateChart(d)"
+              id="d"
+              name="casetype"
+              tabindex="0"
+              class="hidden"
+            />
+            <label for="d">Deaths</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input
+              type="radio"
+              value="r"
+              #r
+              (click)="updateChart(r)"
+              id="r"
+              name="casetype"
+              tabindex="0"
+              class="hidden"
+            />
+            <label for="r">Recovered</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input
+              id="a"
+              #a
+              type="radio"
+              (click)="updateChart(a)"
+              value="a"
+              name="casetype"
+              tabindex="0"
+              class="hidden"
+            />
+            <label for="a">Active</label>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="card col p-3 m-3">
-      <div class="ui statistic">
-        <div class="label">
-          <font style="vertical-align: inherit"
-            ><font style="vertical-align: inherit">
-              <h3>Recovered</h3>
-            </font></font
-          >
-        </div>
-        <div class="value">
-          <font style="vertical-align: inherit"
-            ><font style="vertical-align: inherit">
-              {{ totalRecovered }}
-            </font></font
-          >
-        </div>
-      </div>
-    </div>
+<div class="row">
+  <div class="col">
+    <google-chart
+      [type]="chart.PieChart"
+      [options]="chart.options"
+      style="width: 100%"
+      [height]="chart.height"
+      [data]="datatable"
+    ></google-chart>
+  </div>
+  <div class="col">
+    <google-chart
+      [type]="chart.ColumnChart"
+      style="width: 100%"
+      [options]="chart.options"
+      [height]="chart.height"
+      [data]="datatable"
+    ></google-chart>
+  </div>
 
-    <div class="card col p-3 m-3">
-      <div class="ui statistic">
-        <div class="label">
-          <font style="vertical-align: inherit"
-            ><font style="vertical-align: inherit"><h3>Deaths</h3> </font></font
-          >
-        </div>
-        <div class="value">
-          <font style="vertical-align: inherit"
-            ><font style="vertical-align: inherit">
-              {{ totalDeaths }}
-            </font></font
-          >
-        </div>
-      </div>
-    </div>
-
-    <div class="card col p-3 m-3">
-      <div class="ui statistic">
-        <div class="label">
-          <font style="vertical-align: inherit"
-            ><font style="vertical-align: inherit">
-              <h3>Active</h3>
-            </font></font
-          >
-        </div>
-        <div class="value">
-          <font style="vertical-align: inherit"
-            ><font style="vertical-align: inherit">
-              {{ totalActive }}
-            </font></font
-          >
-        </div>
-      </div>
-    </div>
+  <div class="col">
+    <google-chart
+      [type]="chart.LineChart"
+      style="width: 100%"
+      [options]="chart.options"
+      [height]="chart.height"
+      [data]="datatable"
+    ></google-chart>
   </div>
 </div>
