@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { count, map } from 'rxjs/operators';
+import { catchError, count, map } from 'rxjs/operators';
 import { DateWisedata } from '../models/date-wise-data';
 import { GlobalDataSummary } from '../models/global-data';
 
@@ -8,10 +8,38 @@ import { GlobalDataSummary } from '../models/global-data';
   providedIn: 'root',
 })
 export class DataServiceService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    let now = new Date();
+    this.month = now.getMonth();
+    this.date = now.getDate();
+    this.year = now.getFullYear();
 
-  private globalDataUrl =
-    'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/04-16-2021.csv';
+    // console.log({
+    //   date: this.date,
+    //   month: this.month,
+    //   year: this.year,
+    // });
+
+    this.globalDataUrl = `${this.baseDataUrl}${this.getDate(this.month)}-${
+      this.date
+    }-${this.year}${this.extension}`;
+    // console.log(this.globalDataUrl);
+  }
+
+  private baseDataUrl =
+    'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/';
+  private globalDataUrl = '';
+  private extension = '.csv';
+  month;
+  year;
+  date;
+
+  getDate(date: number) {
+    if (date < 10) {
+      return '0' + date;
+    }
+    return date;
+  }
 
   private dateWiseDataUrl =
     'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv';
@@ -47,6 +75,21 @@ export class DataServiceService {
         });
 
         return <GlobalDataSummary[]>Object.values(raw);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status == 404) {
+          // this.date = this.date - 1;
+          let now = new Date();
+          now.setDate(now.getDate() - 1);
+          this.month = now.getMonth();
+          this.date = now.getDate();
+          this.year = now.getFullYear();
+          this.globalDataUrl = `${this.baseDataUrl}${this.getDate(
+            this.month
+          )}-${this.date}-${this.year}${this.extension}`;
+          // console.log(this.globalDataUrl);
+          return this.getGlobalData();
+        }
       })
     );
   }

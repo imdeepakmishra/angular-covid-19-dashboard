@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./countries.component.css'],
 })
 export class CountriesComponent implements OnInit {
-  data: GlobalDataSummary[];
+  data: any = [];
   countries: string[] = [];
   totalConfirmed = 0;
   totalActive = 0;
